@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="myFormatter" class="com.animesh.Validation">
+    </bean>
+
+    <bean id="deptBean" class="com.animesh.Department">
+
+        <property name="deptName" value="CS"/>
+        <property name="createdOn" >
+            <bean factory-bean="myFormatter" factory-method="parse">
+                <constructor-arg value="${date}"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer ">
+        <property name="locations" value="Arguments.properties" ></property> </bean>
+
+
+    <bean id="emp" class="com.animesh.Employee">
+        <property name="al">
+            <list>
+                <value>A</value>
+                <value>B</value>
+                <value>C</value>
+            </list>
+        </property>
+
+        <property name="name" value="${name}"/>
+        <constructor-arg value="${age}" type="Integer"></constructor-arg>
+        <constructor-arg value="${salary}" type="Double"></constructor-arg>
+        <constructor-arg><ref bean="deptBean"/></constructor-arg>
+    </bean>
+</beans>
+
